@@ -5,3 +5,6 @@ wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vi
 
 # Bash profile
 wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.bash -O ~/.bashrc
+
+# Create local bin dir
+mkdir -p ~/bin
