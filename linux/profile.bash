@@ -1,6 +1,7 @@
 # Aliases
 alias ll='ls -halF'
 alias cd..='cd ..'
+alias apti='sudo apt-get install'
 
 # Handy exports
 export GH='https://github.com/omtinez'
