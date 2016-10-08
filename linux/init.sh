@@ -9,3 +9,4 @@ wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
 wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/gitsetup.sh -O ~/bin/gitsetup
+chmod +x ~/bin/*
