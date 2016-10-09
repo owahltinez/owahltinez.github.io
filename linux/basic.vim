@@ -1,4 +1,4 @@
-## General
+" General
 set number	# Show line numbers
 set linebreak	# Break lines at word (requires Wrap lines)
 set showbreak=+++	# Wrap-broken line prefix
@@ -17,7 +17,7 @@ set smartindent	# Enable smart-indent
 set smarttab	# Enable smart-tabs
 set softtabstop=4	# Number of spaces per Tab
  
-## Advanced
+" Advanced
 set ruler	# Show row and column ruler information
  
 set undolevels=1000	# Number of undo levels
