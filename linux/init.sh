@@ -1,10 +1,10 @@
 #!/bin/sh
 
 # VIM customizations
-wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vim -O ~/.vimrc
+wget -sS https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vim -O ~/.vimrc
 
-# Bash profile
-wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.bash -O ~/.bashrc
+# Bash profile (append to existing one)
+curl -sS https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.bash >> ~/.bashrc
 
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
