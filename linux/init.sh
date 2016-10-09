@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # VIM customizations
-wget -sS https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vim -O ~/.vimrc
+wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vim -O ~/.vimrc
 
 # Bash profile (append to existing one)
 curl -sS https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.bash >> ~/.bashrc
