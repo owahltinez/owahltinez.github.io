@@ -7,9 +7,13 @@ alias apti='sudo apt-get install'
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
+addsshkey() {
+    cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+}
 
 # Export defined functions
 export -f lsipv6
+export -f addsshkey
 
 # Handy exports
 export GH='https://github.com/omtinez'
