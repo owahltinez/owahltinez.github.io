@@ -6,17 +6,17 @@ SHOWADDRS=0
 INTERFACE=venet0
 
 # Parse options
-while getopts ":i:n:l:" opt; do
-  case $opt in
-    i) INTERFACE="$OPTARG"
-    ;;
-    n) IPINDEX=$(($OPTARG))
-    ;;
-    l) SHOWADDRS=1
-    ;;
-    \?) echo "Usage: switchip [-l] [-i <network interface>] [-n <1-based index of available addresses>]"; exit;
-    ;;
-  esac
+while getopts "li:n:" opt; do
+    case $opt in
+        l) SHOWADDRS=1
+        ;;
+        i) INTERFACE="$OPTARG"
+        ;;
+        n) IPINDEX=$(($OPTARG))
+        ;;
+        \?) echo "Usage: switchip [-l] [-i <network interface>] [-n <1-based index of available addresses>]"; exit;
+        ;;
+    esac
 done
 
 # List out all available addresses
@@ -24,7 +24,7 @@ ALLADDR=`ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1
 ADDRCOUNT=`echo "$ALLADDR" | wc -l`
 
 # Do we only need to list them?
-if [ "$SHOWADDRS" -eq "1" ]; then
+if [ "$SHOWADDRS" == "1" ]; then
     echo "$ALLADDR"
     exit
 fi
@@ -43,10 +43,10 @@ fi
 COUNTER=1
 for ADDR in $ALLADDR; do
     if [ "$COUNTER" == "$IPINDEX" ]; then
-	echo "Selecting IP address as default: $ADDR"
-	FLAG=1
+        echo "Selecting IP address as default: $ADDR"
+        FLAG=1
     else
-	FLAG=0;
+        FLAG=0;
     fi
     ip addr change $ADDR dev $INTERFACE preferred_lft $FLAG
     COUNTER=$((COUNTER+1))
