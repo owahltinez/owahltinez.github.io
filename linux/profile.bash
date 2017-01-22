@@ -1,4 +1,3 @@
-
 ### CUSTOM CONFIG STARTS HERE ###
 
 # Aliases
