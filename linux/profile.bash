@@ -6,6 +6,7 @@ alias ll='ls -halF'
 alias cd..='cd ..'
 alias apti='sudo apt-get install'
 alias update='sudo apt-get update && sudo apt-get dist-upgrade'
+alias sudosu='sudo bash --init-file ~/.bashrc'
 
 # Define functions
 lsipv6() {
@@ -14,10 +15,16 @@ lsipv6() {
 addsshkey() {
     cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 }
+gitsetup() {
+    git config --global credential.helper 'cache --timeout=999999999'
+    git config --global user.name "omtinez"
+    git config --global user.email "omtinez@gmail.com"
+}
 
 # Export defined functions
 export -f lsipv6
 export -f addsshkey
+export -f gitsetup
 
 # Handy exports
 export GH='https://github.com/omtinez'
