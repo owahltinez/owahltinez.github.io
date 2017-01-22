@@ -8,7 +8,7 @@ lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
 addsshkey() {
-    cat ~/.ssh/id_rsa.pub | ssh $1 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+    cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 }
 
 # Export defined functions
@@ -17,6 +17,7 @@ export -f addsshkey
 
 # Handy exports
 export GH='https://github.com/omtinez'
+export GH='https://gitlab.com/omtinez'
 export GT='https://github.gatech.edu/omartinez8'
 
 # Paths
