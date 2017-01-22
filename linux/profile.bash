@@ -3,8 +3,8 @@
 # Aliases
 alias ll='ls -halF'
 alias cd..='cd ..'
-alias apti='sudo apt-get install'
-alias update='sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get autoremove'
+alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install'
+alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes dist-upgrade && sudo apt-get -yq autoremove'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
 
