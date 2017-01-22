@@ -28,7 +28,7 @@ export -f gitsetup
 
 # Handy exports
 export GH='https://github.com/omtinez'
-export GH='https://gitlab.com/omtinez'
+export GL='https://gitlab.com/omtinez'
 export GT='https://github.gatech.edu/omartinez8'
 
 # Paths
