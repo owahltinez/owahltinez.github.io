@@ -7,6 +7,7 @@ alias cd..='cd ..'
 alias apti='sudo apt-get install'
 alias update='sudo apt-get update && sudo apt-get dist-upgrade'
 alias sudosu='sudo bash --init-file ~/.bashrc'
+alias sudovi='sudo vi -u ~/.bashrc'
 
 # Define functions
 lsipv6() {
