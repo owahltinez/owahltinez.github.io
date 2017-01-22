@@ -6,6 +6,7 @@ wget https://raw.githubusercontent.com/omtinez/initscripts/master/linux/basic.vi
 # Bash profile (append to existing one)
 sed -i '/### CUSTOM CONFIG STARTS HERE ###/Q' ~/.bashrc
 wget -q https://raw.githubusercontent.com/omtinez/initscripts/master/linux/profile.bash -O - >> ~/.bashrc
+source ~/.bashrc
 
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
