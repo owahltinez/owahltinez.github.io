@@ -1,7 +1,11 @@
+
+### CUSTOM CONFIG STARTS HERE ###
+
 # Aliases
 alias ll='ls -halF'
 alias cd..='cd ..'
 alias apti='sudo apt-get install'
+alias update='sudo apt-get update && sudo apt-get dist-upgrade'
 
 # Define functions
 lsipv6() {
