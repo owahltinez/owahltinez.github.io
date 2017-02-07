@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Hard code the username
-$USERNAME="omtinez"
+USERNAME="omtinez"
 
 # VIM customizations
 wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/basic.vim -O ~/.vimrc
