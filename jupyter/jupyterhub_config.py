@@ -1,5 +1,8 @@
 # Configuration file for jupyterhub.
 
+# Command to start the jupyterhub (place in /etc/rc.local)
+#/usr/local/bin/jupyterhub -f /etc/jupyter/jupyterhub_config.py 2>&1 >> /var/log/jupyterhub.log &
+
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
