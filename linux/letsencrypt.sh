@@ -7,8 +7,8 @@ mkdir -p /etc/nginx/certs
 
 # Issue the certificates
 /bin/sh ~/bin/acme.sh --issue \
-	-d sub1.omtinez.com -d sub2.omtinez.com -d sub3.omtinez.com \
-        -w /tmp/www --certhome /tmp/certs $@
+	-d domain1.com -d domain2.com -d domain3.com \
+    -w /tmp/www --certhome /tmp/certs $@
 
 # Copy the created certificates, cleanup and exit
 find /tmp/certs -name fullchain.cer -exec cp {} /etc/nginx/certs/fullchain.cer \;
