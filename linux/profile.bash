@@ -20,6 +20,7 @@ gitsetup() {
     git config --global user.name "omtinez"
     git config --global user.email "omtinez@gmail.com"
     git config --global push.default simple
+    git config --global core.excludesfile ~/.gitignore_global
 }
 
 # Export defined functions
