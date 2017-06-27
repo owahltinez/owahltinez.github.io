@@ -10,6 +10,9 @@ wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/basic.vim
 sed -i '/### CUSTOM CONFIG STARTS HERE ###/Q' ~/.bashrc
 wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/profile.bash -O - >> ~/.bashrc
 
+# Global .gitignore
+wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/git/.gitignore_global -O - > ~/.gitignore_global
+
 # Deploy SSH keys
 wget --quiet https://gitlab.com/$USERNAME.keys -O - >> ~/.ssh/authorized_keys
 
