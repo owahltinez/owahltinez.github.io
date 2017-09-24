@@ -3,8 +3,8 @@
 # Aliases
 alias ll='ls -halF'
 alias cd..='cd ..'
-alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends --force-yes install'
-alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends --force-yes dist-upgrade && sudo apt-get -yq autoremove'
+alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
+alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends dist-upgrade && sudo apt-get -yq autoremove'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
 
@@ -12,8 +12,20 @@ alias sudovi='sudo vi -u ~/.vimrc'
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
-addsshkey() {
+sshkeygen() {
+    mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa.pub -t rsa -N ''
+}
+sshkeypush() {
     cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+}
+sshkeypull() {
+    scp $@:~/.ssh/id_rsa.pub /tmp/$@.pub
+    cat /tmp/$@.pub ~/.ssh/authorized_keys
+    rm /tmp/$@.pub
+}
+nodeinstall() {
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+    apti nodejs
 }
 gitsetup() {
     git config --global credential.helper 'cache --timeout=999999999'
@@ -25,7 +37,9 @@ gitsetup() {
 
 # Export defined functions
 export -f lsipv6
-export -f addsshkey
+export -f sshkeygen
+export -f sshkeypush
+export -f sshkeypull
 export -f gitsetup
 
 # Handy exports
