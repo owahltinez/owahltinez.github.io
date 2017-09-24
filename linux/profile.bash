@@ -20,7 +20,7 @@ sshkeypush() {
 }
 sshkeypull() {
     scp $@:~/.ssh/id_rsa.pub /tmp/$@.pub
-    cat /tmp/$@.pub ~/.ssh/authorized_keys
+    cat /tmp/$@.pub >> ~/.ssh/authorized_keys
     rm /tmp/$@.pub
 }
 nodeinstall() {
