@@ -40,6 +40,7 @@ export -f lsipv6
 export -f sshkeygen
 export -f sshkeypush
 export -f sshkeypull
+export -f nodeinstall
 export -f gitsetup
 
 # Handy exports
