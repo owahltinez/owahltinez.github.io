@@ -13,7 +13,7 @@ lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
 sshkeygen() {
-    mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa.pub -t rsa -N ''
+    mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 }
 sshkeypush() {
     cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
