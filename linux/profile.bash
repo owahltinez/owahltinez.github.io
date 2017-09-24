@@ -24,8 +24,7 @@ sshkeypull() {
     rm /tmp/$@.pub
 }
 nodeinstall() {
-    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-    apti nodejs
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && apti nodejs
 }
 gitsetup() {
     git config --global credential.helper 'cache --timeout=999999999'
