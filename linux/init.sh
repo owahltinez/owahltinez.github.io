@@ -14,6 +14,7 @@ wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/profile.b
 wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/git/.gitignore_global -O - > ~/.gitignore_global
 
 # Deploy SSH keys
+mkdir -p ~/.ssh
 wget --quiet https://gitlab.com/$USERNAME.keys -O - >> ~/.ssh/authorized_keys
 
 # Create local bin dir and move some utils there
