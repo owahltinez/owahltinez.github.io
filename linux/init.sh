@@ -16,7 +16,6 @@ wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/git/.gitignore_
 # Deploy SSH keys
 mkdir -p ~/.ssh
 wget --quiet https://gitlab.com/$USERNAME.keys -O - >> ~/.ssh/authorized_keys
-echo "" >> ~/.ssh/authorized_keys
 
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
