@@ -31,6 +31,9 @@ install_chrome() {
         echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && \
         update && apti google-chrome-stable
 }
+install_nginx() {
+    sudo add-apt-repository ppa:nginx/stable && update && apti nginx
+}
 gitsetup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
