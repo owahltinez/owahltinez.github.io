@@ -34,9 +34,6 @@ install_chrome() {
 install_nginx() {
     sudo add-apt-repository ppa:nginx/stable && update && apti nginx
 }
-install_acme() {
-    curl https://get.acme.sh | sh
-}
 gitsetup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
