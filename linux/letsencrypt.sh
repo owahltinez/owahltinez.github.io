@@ -6,7 +6,7 @@ mkdir -p /tmp/certs
 mkdir -p /etc/nginx/certs
 
 # Issue the certificates
-/bin/sh ~/bin/acme.sh --issue \
+/bin/sh /home/omtinez/bin/acme.sh --issue \
     -d domain1.com -d domain2.com -d domain3.com \
     -w /tmp/www --certhome /tmp/certs $@
 
