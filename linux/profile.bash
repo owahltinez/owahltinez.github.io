@@ -12,16 +12,25 @@ alias sudovi='sudo vi -u ~/.vimrc'
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
-sshkeygen() {
+ssh_key_gen() {
     mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 }
-sshkeypush() {
+ssh_key_push() {
     cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
 }
-sshkeypull() {
+ssh_key_pull() {
     scp $@:~/.ssh/id_rsa.pub /tmp/$@.pub
     cat /tmp/$@.pub >> ~/.ssh/authorized_keys
     rm /tmp/$@.pub
+}
+ssh_pwd_disable() {
+    # https://gist.github.com/parente/0227cfbbd8de1ce8ad05
+    sudo sh -c '\
+        grep -q "ChallengeResponseAuthentication" /etc/ssh/sshd_config && \
+        sed -i "/^[^#]*ChallengeResponseAuthentication[[:space:]]yes.*/c\ChallengeResponseAuthentication no" /etc/ssh/sshd_config || echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config; \
+        grep -q "^[^#]*PasswordAuthentication" /etc/ssh/sshd_config && \
+        sed -i "/^[^#]*PasswordAuthentication[[:space:]]yes/c\PasswordAuthentication no" /etc/ssh/sshd_config || echo "PasswordAuthentication no" >> /etc/ssh/sshd_config; \
+        service ssh restart'
 }
 install_node() {
     curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && apti nodejs
