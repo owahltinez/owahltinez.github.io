@@ -53,9 +53,10 @@ gitsetup() {
 
 # Export defined functions
 export -f lsipv6
-export -f sshkeygen
-export -f sshkeypush
-export -f sshkeypull
+export -f ssh_key_gen
+export -f ssh_key_push
+export -f ssh_key_pull
+export -f ssh_pwd_disable
 export -f install_node
 export -f install_chrome
 export -f gitsetup
