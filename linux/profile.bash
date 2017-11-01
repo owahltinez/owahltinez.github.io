@@ -4,7 +4,7 @@
 alias ll='ls -halF'
 alias cd..='cd ..'
 alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
-alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends dist-upgrade && sudo apt-get -yq autoremove'
+alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade && sudo apt-get -yq autoremove'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
 
