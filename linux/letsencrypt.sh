@@ -11,7 +11,7 @@ mkdir -p /etc/nginx/certs
     -w /tmp/www --certhome /tmp/certs $@
 
 # Copy the created certificates, cleanup and exit
-find /tmp/certs -name fullchain.cer -exec cp {} /etc/nginx/certs/fullchain.cer \;
-find /tmp/certs -name *.key -exec cp {} /etc/nginx/certs/priv.key \;
+find /tmp/certs -name fullchain.cer -exec cp {} /etc/nginx/ssl/fullchain.cer \;
+find /tmp/certs -name *.key -exec cp {} /etc/nginx/ssl/priv.key \;
 rm -rf /tmp/www
 rm -rf /tmp/certs
