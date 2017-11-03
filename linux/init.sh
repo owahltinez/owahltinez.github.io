@@ -22,7 +22,6 @@ echo "" >> ~/.ssh/authorized_keys
 mkdir -p ~/bin
 wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/switchip.sh -O ~/bin/switchip
 wget --quiet https://raw.githubusercontent.com/omtinez/AP-Hotspot/master/ap-hotspot -O ~/bin/ap-hotspot
-wget --quiet https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O ~/bin/acme.sh
 wget --quiet https://gitlab.com/$USERNAME/initscripts/raw/master/linux/letsencrypt.sh -O ~/bin/letsencrypt.sh
 chmod +x ~/bin/*
 
