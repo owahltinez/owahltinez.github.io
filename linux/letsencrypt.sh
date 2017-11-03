@@ -10,7 +10,7 @@ DHPEM="/etc/nginx/ssl/dhparam.pem"
 [ -e $DHPEM ] || openssl dhparam -out $DHPEM 2048
 
 # Issue the certificates
-/bin/sh /home/omtinez/bin/acme.sh --issue \
+/usr/local/bin/acme --issue \
     -d domain1.com -d domain2.com -d domain3.com \
     -w /tmp/www --certhome /tmp/certs $@
 
