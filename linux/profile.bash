@@ -43,7 +43,10 @@ install_chrome() {
 install_nginx() {
     sudo add-apt-repository ppa:nginx/stable && update && apti nginx
 }
-gitsetup() {
+install_acme() {
+    sudo wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && sudo chmod +x /usr/local/bin/acme
+}
+git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
     git config --global user.email "omtinez@gmail.com"
@@ -59,7 +62,8 @@ export -f ssh_key_pull
 export -f ssh_pwd_disable
 export -f install_node
 export -f install_chrome
-export -f gitsetup
+export -f install_acme
+export -f git_setup
 
 # Handy exports
 export GH='https://github.com/omtinez'
