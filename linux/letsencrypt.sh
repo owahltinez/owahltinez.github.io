@@ -6,7 +6,8 @@ mkdir -p /tmp/certs
 mkdir -p /etc/nginx/ssl
 
 # Create a strong DH key if none exist
-[ -e /tmp/echo ] || openssl dhparam -out /etc/nginx/ssl/dhparam.pem 2048
+DHPEM="/etc/nginx/ssl/dhparam.pem"
+[ -e $DHPEM ] || openssl dhparam -out $DHPEM 2048
 
 # Issue the certificates
 /bin/sh /home/omtinez/bin/acme.sh --issue \
