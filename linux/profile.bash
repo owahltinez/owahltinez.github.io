@@ -37,7 +37,7 @@ install_node() {
 }
 install_chrome() {
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
-        echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && \
+        echo "deb [arch=$(arch)] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && \
         update && apti google-chrome-stable
 }
 install_nginx() {
