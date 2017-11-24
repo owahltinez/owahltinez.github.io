@@ -41,7 +41,7 @@ install_chrome() {
         update && apti google-chrome-stable
 }
 install_nginx() {
-    sudo add-apt-repository ppa:nginx/stable && update && apti nginx
+    apti software-properties-common && sudo add-apt-repository ppa:nginx/stable && update && apti nginx
 }
 install_acme() {
     sudo wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && sudo chmod +x /usr/local/bin/acme
