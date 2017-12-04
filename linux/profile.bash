@@ -46,6 +46,11 @@ install_nginx() {
 install_acme() {
     sudo wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && sudo chmod +x /usr/local/bin/acme
 }
+install_docker() {
+    wget -O - https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+    update && apti docker-ce
+}
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
@@ -63,6 +68,7 @@ export -f ssh_pwd_disable
 export -f install_node
 export -f install_chrome
 export -f install_acme
+export -f install_docker
 export -f git_setup
 
 # Handy exports
