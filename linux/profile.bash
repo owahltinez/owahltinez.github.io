@@ -49,7 +49,8 @@ install_acme() {
 install_docker() {
     wget -O - https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
     echo "deb [arch=$(arch)] https://download.docker.com/linux/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/docker.list && \
-    update && apti docker-ce
+    update && apti docker-ce && \
+    sudo groupadd docker && sudo usermod -aG docker $USER
 }
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
