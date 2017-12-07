@@ -47,10 +47,8 @@ install_acme() {
     sudo wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && sudo chmod +x /usr/local/bin/acme
 }
 install_docker() {
-    wget -O - https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
-    echo "deb [arch=$(arch)] https://download.docker.com/linux/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/docker.list && \
-    update && apti docker-ce && \
-    sudo groupadd docker && sudo usermod -aG docker $USER
+    wget -q -O - https://get.docker.com | sudo sh && \
+    (sudo groupadd docker || true) && sudo usermod -aG docker $USER
 }
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
