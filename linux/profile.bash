@@ -56,7 +56,8 @@ install_acme() {
 }
 install_docker() {
     wget -q -O - https://get.docker.com | sudo sh && \
-    sudo wget -q https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && \
+    sudo wget -q https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose && \
+    sudo chmod +x /usr/local/bin/docker-compose && \
     (sudo groupadd docker || true) && sudo usermod -aG docker $USER
 }
 git_setup() {
