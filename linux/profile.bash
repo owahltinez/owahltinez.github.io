@@ -9,7 +9,7 @@ alias sudovi='sudo vi -u ~/.vimrc'
 
 # Define functions
 update() {
-    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/profile.bash | bash && \
+    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh && \
     sudo apt-get update && \
     sudo DEBIAN_FRONTEND=noninteractive \
         apt-get -yq --no-install-suggests --no-install-recommends \
