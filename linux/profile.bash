@@ -15,7 +15,7 @@ update() {
         -o Dpkg::Options::="--force-confdef" \
         -o Dpkg::Options::="--force-confold" dist-upgrade && \
     sudo apt-get -yq autoremove && \
-    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/profile.bash | sh
+    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/profile.bash | bash
 }
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
