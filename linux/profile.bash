@@ -9,13 +9,13 @@ alias sudovi='sudo vi -u ~/.vimrc'
 
 # Define functions
 update() {
+    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/profile.bash | bash && \
     sudo apt-get update && \
     sudo DEBIAN_FRONTEND=noninteractive \
         apt-get -yq --no-install-suggests --no-install-recommends \
         -o Dpkg::Options::="--force-confdef" \
         -o Dpkg::Options::="--force-confold" dist-upgrade && \
-    sudo apt-get -yq autoremove && \
-    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/profile.bash | bash
+    sudo apt-get -yq autoremove
 }
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
