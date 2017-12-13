@@ -4,11 +4,19 @@
 alias ll='ls -halF'
 alias cd..='cd ..'
 alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
-alias update='sudo apt-get update && sudo apt-get -yq --no-install-suggests --no-install-recommends -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade && sudo apt-get -yq autoremove'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
 
 # Define functions
+update() {
+    sudo apt-get update && \
+    sudo DEBIAN_FRONTEND=noninteractive \
+        apt-get -yq --no-install-suggests --no-install-recommends \
+        -o Dpkg::Options::="--force-confdef" \
+        -o Dpkg::Options::="--force-confold" dist-upgrade && \
+    sudo apt-get -yq autoremove && \
+    wget -q -O - https://linux.omtinez.com | sh
+}
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
 }
@@ -60,6 +68,7 @@ git_setup() {
 }
 
 # Export defined functions
+export -f update
 export -f lsipv6
 export -f ssh_key_gen
 export -f ssh_key_push
