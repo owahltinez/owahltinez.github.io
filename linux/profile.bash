@@ -60,6 +60,18 @@ install_docker() {
     sudo chmod +x /usr/local/bin/docker-compose && \
     (sudo groupadd docker || true) && sudo usermod -aG docker $USER
 }
+install_dotnet() {
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list' && \
+    update && apti dotnet-sdk-2.0.2
+}
+install_azcopy() {
+    wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux && \
+    tar -xf azcopy.tar.gz && \
+    sudo ./install.sh && \
+    rm azcopy.tar.gz
+}
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
@@ -79,6 +91,8 @@ export -f install_node
 export -f install_chrome
 export -f install_acme
 export -f install_docker
+export -f install_dotner
+export -f install_azcopy
 export -f git_setup
 
 # Handy exports
