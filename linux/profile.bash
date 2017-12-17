@@ -91,7 +91,7 @@ export -f install_node
 export -f install_chrome
 export -f install_acme
 export -f install_docker
-export -f install_dotner
+export -f install_dotnet
 export -f install_azcopy
 export -f git_setup
 
