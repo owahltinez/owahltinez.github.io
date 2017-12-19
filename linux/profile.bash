@@ -67,10 +67,13 @@ install_dotnet() {
     update && apti dotnet-sdk-2.0.2
 }
 install_azcopy() {
+    mkdir -p /tmp/azcopy && \
+    cd /tmp/azcopy && \
     wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux && \
     tar -xf azcopy.tar.gz && \
     sudo ./install.sh && \
-    rm azcopy.tar.gz
+    cd - && \
+    rm -rf /tmp/azcopy
 }
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
