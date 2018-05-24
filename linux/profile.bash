@@ -6,7 +6,6 @@ alias cd..='cd ..'
 alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
-alias sudocheck='if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; 0 ; else 1 ; fi'
 
 # Define functions
 sudocheck() {
@@ -95,6 +94,7 @@ git_new_project() {
 }
 
 # Export defined functions
+export -f sudocheck
 export -f update
 export -f lsipv6
 export -f ssh_key_gen
