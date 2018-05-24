@@ -89,7 +89,7 @@ git_setup() {
 git_new_project() {
     if [[ ! $GITLAB_TOKEN ]] ; then echo "Env variable GITLAB_TOKEN has not been set" && return 1; fi
     CURR_DIR=${PWD##*/}
-    PROJECT_NAME=${1:$CURR_DIR}
+    PROJECT_NAME=${1:-$CURR_DIR}
     curl -H "Content-Type:application/json" https://gitlab.com/api/v3/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }"
 }
 
