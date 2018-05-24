@@ -111,7 +111,7 @@ export -f git_setup
 export -f git_new_project
 
 # Import other scripts / envs
-if [[ -f "~/.env" ]] ; then source "~/.env" ; fi
+if [[ -f ~/.env ]] ; then source ~/.env ; fi
 
 # Paths
 export PATH=$PATH:~/bin
