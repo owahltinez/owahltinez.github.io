@@ -6,15 +6,17 @@ alias cd..='cd ..'
 alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
+alias sudocheck='if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi'
 
 # Define functions
 update() {
-    sudo apt-get update && \
-    sudo DEBIAN_FRONTEND=noninteractive \
+    sudocheck && \
+    DEBIAN_FRONTEND=noninteractive \
+    apt-get update && \
         apt-get -yq --no-install-suggests --no-install-recommends \
         -o Dpkg::Options::="--force-confdef" \
         -o Dpkg::Options::="--force-confold" dist-upgrade && \
-    sudo apt-get -yq autoremove && \
+    apt-get -yq autoremove && \
     wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
 }
 lsipv6() {
@@ -24,7 +26,7 @@ ssh_key_gen() {
     mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 }
 ssh_key_push() {
-    cat ~/.ssh/id_rsa.pub | ssh $@ "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+    ssh-copy-id -i ~/.ssh/id_rsa $@
 }
 ssh_key_pull() {
     scp $@:~/.ssh/id_rsa.pub /tmp/$@.pub
@@ -33,7 +35,7 @@ ssh_key_pull() {
 }
 ssh_pwd_disable() {
     # https://gist.github.com/parente/0227cfbbd8de1ce8ad05
-    sudo sh -c '\
+    sudocheck && sh -c '\
         grep -q "ChallengeResponseAuthentication" /etc/ssh/sshd_config && \
         sed -i "/^[^#]*ChallengeResponseAuthentication[[:space:]]yes.*/c\ChallengeResponseAuthentication no" /etc/ssh/sshd_config || echo "ChallengeResponseAuthentication no" >> /etc/ssh/sshd_config; \
         grep -q "^[^#]*PasswordAuthentication" /etc/ssh/sshd_config && \
@@ -41,34 +43,34 @@ ssh_pwd_disable() {
         service ssh restart'
 }
 install_node() {
-    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && apti nodejs
+    sudocheck && curl -sL https://deb.nodesource.com/setup_8.x | bash - && apti nodejs
 }
 install_chrome() {
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
-        echo "deb [arch=$(arch)] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && \
+    sudocheck && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -  && \
+        echo "deb [arch=$(dpkg --print-architecture)] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list && \
         update && apti google-chrome-stable
 }
 install_nginx() {
-    apti software-properties-common && sudo add-apt-repository ppa:nginx/stable && update && apti nginx
+    sudocheck && apti software-properties-common && add-apt-repository ppa:nginx/stable && update && apti nginx
 }
 install_acme() {
-    sudo wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && sudo chmod +x /usr/local/bin/acme
+    wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && chmod +x /usr/local/bin/acme
 }
 install_docker() {
-    wget -q -O - https://get.docker.com | sudo sh && \
-    sudo wget -q https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose && \
-    sudo chmod +x /usr/local/bin/docker-compose && \
-    (sudo groupadd docker || true) && sudo usermod -aG docker $USER
+    sudocheck && wget -q -O - https://get.docker.com | sh && \
+    wget -q https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose && \
+    chmod +x /usr/local/bin/docker-compose && \
+    (groupadd docker || true) && usermod -aG docker $USER
 }
 install_dotnet() {
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
-    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list' && \
+    sudocheck && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    sh -c 'echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list' && \
     update && apti dotnet-sdk-2.0.2
 }
 install_azcopy() {
-    mkdir -p /tmp/azcopy && \
-    cd /tmp/azcopy && \
+    sudocheck && \
+    mkdir -p /tmp/azcopy && cd /tmp/azcopy && \
     wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux && \
     tar -xf azcopy.tar.gz && \
     sudo ./install.sh && \
@@ -80,7 +82,13 @@ git_setup() {
     git config --global user.name "omtinez"
     git config --global user.email "omtinez@gmail.com"
     git config --global push.default simple
-    git config --global core.excludesfile ~/.gitignore_global
+    git config --global core.excludesfile ~/.git/.gitignore
+}
+git_new_project() {
+    if [[ ! $GITLAB_TOKEN ]] ; then echo "Env variable GITLAB_TOKEN has not been set" && exit 1; fi
+    CURR_DIR=${PWD##*/}
+    PROJECT_NAME=${1:$CURR_DIR}
+    curl -H "Content-Type:application/json" https://gitlab.com/api/v3/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }"
 }
 
 # Export defined functions
@@ -97,11 +105,10 @@ export -f install_docker
 export -f install_dotnet
 export -f install_azcopy
 export -f git_setup
+export -f git_new_project
 
-# Handy exports
-export GH='https://github.com/omtinez'
-export GL='https://gitlab.com/omtinez'
-export GT='https://github.gatech.edu/omartinez8'
+# Import other scripts / envs
+if [[ -f "~/.env" ]] ; then source "~/.env" ; fi
 
 # Paths
 export PATH=$PATH:~/bin
