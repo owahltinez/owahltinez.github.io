@@ -93,7 +93,7 @@ git_new_project() {
     rm -rfi .git && \
         curl -H "Content-Type:application/json" https://gitlab.com/api/v3/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }" && \
         git init && \
-        git remote add origin "https://oauth2:QCtyC4Lpf4Jbbx3QWN_q@gitlab.com:omtinez/$PROJECT_NAME.git"
+        git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com:omtinez/$PROJECT_NAME.git"
 }
 
 # Export defined functions
