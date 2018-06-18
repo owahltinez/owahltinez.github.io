@@ -91,7 +91,7 @@ git_new_project() {
     CURR_DIR=${PWD##*/}
     PROJECT_NAME=${1:-$CURR_DIR}
     if [[ -f ~/.git ]] ; then rm -rfi .git ; fi && \
-        curl -H "Content-Type:application/json" https://gitlab.com/api/v3/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }" && \
+        curl -H "Content-Type:application/json" https://gitlab.com/api/v4/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }" && \
         git init && \
         git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/omtinez/$PROJECT_NAME.git"
 }
