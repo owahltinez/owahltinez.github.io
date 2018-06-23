@@ -6,7 +6,7 @@ alias cd..='cd ..'
 alias apti='sudo -E apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
-if [[ $(id -u) -e 0 ]] ; then
+if [[ $(id -u) = 0 ]] ; then
     alias sudo=''
 fi
 
