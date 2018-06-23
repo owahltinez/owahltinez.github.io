@@ -16,12 +16,12 @@ sudocheck() {
 }
 update() {
     DEBIAN_FRONTEND=noninteractive \
-    sudo apt-get update && \
-        apt-get -yq --no-install-suggests --no-install-recommends \
-        -o Dpkg::Options::="--force-confdef" \
-        -o Dpkg::Options::="--force-confold" dist-upgrade && \
-    sudo apt-get -yq autoremove && \
-    wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
+        sudo apt-get update && \
+        sudo apt-get -yq --no-install-suggests --no-install-recommends \
+            -o Dpkg::Options::="--force-confdef" \
+            -o Dpkg::Options::="--force-confold" dist-upgrade && \
+        sudo apt-get -yq autoremove && \
+        wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
 }
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
