@@ -26,7 +26,7 @@ update() {
             -o Dpkg::Options::="--force-confdef" \
             -o Dpkg::Options::="--force-confold" dist-upgrade && \
         sudo apt-get -yq autoremove && \
-        wget -q -O - https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
+        dl https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
 }
 lsipv6() {
     ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
@@ -55,7 +55,7 @@ install_node() {
     sudo curl -sL https://deb.nodesource.com/setup_8.x | bash - && apti nodejs
 }
 install_chrome() {
-    sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -  && \
+    sudo dl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -  && \
         echo "deb [arch=$(dpkg --print-architecture)] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list && \
         update && apti google-chrome-stable
 }
@@ -63,22 +63,22 @@ install_nginx() {
     sudo apti software-properties-common && add-apt-repository ppa:nginx/stable && update && apti nginx
 }
 install_acme() {
-    wget -q https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh -O /usr/local/bin/acme && chmod +x /usr/local/bin/acme
+    dl https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh > /usr/local/bin/acme && chmod +x /usr/local/bin/acme
 }
 install_docker() {
-    wget -q -O - https://get.docker.com | sudo sh && \
-    wget -q https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -O /usr/local/bin/docker-compose && \
+    dl https://get.docker.com | sudo sh && \
+    dl https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
     (groupadd docker || true) && usermod -aG docker $USER
 }
 install_dotnet() {
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
     echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod bionic main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
     update && apti dotnet-sdk-2.1
 }
 install_vscode() {
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
     echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
     update && apti libxss1 libasound2 code
