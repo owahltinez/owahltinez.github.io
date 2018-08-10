@@ -13,7 +13,7 @@ if [[ $(id -u) = 0 ]] ; then
 fi
 
 # Binary used for downloads
-if command -v curl >/dev/null 2>&1; then alias dl='curl -sSL' ; else alias dl='wget -O -' ; fi
+if command -v curl > /dev/null 2>&1; then alias dl='curl -sSL' ; else alias dl='wget -O -' ; fi
 
 # Define functions
 sudocheck() {
