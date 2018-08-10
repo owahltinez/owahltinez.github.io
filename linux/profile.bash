@@ -6,9 +6,14 @@ alias cd..='cd ..'
 alias apti='sudo apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
+
+# Fake sudo for devices that do not have it
 if [[ $(id -u) = 0 ]] ; then
     alias sudo=''
 fi
+
+# Binary used for downloads
+if command -v curl >/dev/null 2>&1; then alias dl='curl -sSL' ; else alias dl='wget -O -' ; fi
 
 # Define functions
 sudocheck() {
