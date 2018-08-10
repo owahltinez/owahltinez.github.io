@@ -69,7 +69,7 @@ install_docker() {
     dl https://get.docker.com | sudo sh && \
     dl https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null && \
     sudo chmod +x /usr/local/bin/docker-compose && \
-    sudo (groupadd docker || true) && usermod -aG docker $USER
+    (sudo groupadd docker || true) && usermod -aG docker $USER
 }
 install_dotnet() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
