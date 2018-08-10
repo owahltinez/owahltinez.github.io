@@ -74,16 +74,14 @@ install_docker() {
 install_dotnet() {
     curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod xenial main" | sudo tee -a /etc/apt/sources.list.d/dotnetdev.list && \
-    update && apti dotnet-sdk-2.0.2
+    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod bionic main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
+    update && apti dotnet-sdk-2.1
 }
-install_azcopy() {
-    mkdir -p /tmp/azcopy && cd /tmp/azcopy && \
-    wget -O azcopy.tar.gz https://aka.ms/downloadazcopyprlinux && \
-    tar -xf azcopy.tar.gz && \
-    sudo ./install.sh && \
-    cd - && \
-    rm -rf /tmp/azcopy
+install_vscode() {
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
+    update && apti libxss1 libasound2 code
 }
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
