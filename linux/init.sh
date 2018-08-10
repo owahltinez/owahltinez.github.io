@@ -4,9 +4,8 @@
 USERNAME="omtinez"
 
 # Use wget or curl, whichever is available (but prefer curl)
-command -v wget && DL="wget --quiet -O -"
-command -v curl && DL="curl -sSL"
-command -v $DL || { echo >&2 "wget or curl not available"; exit 1; }
+if command -v curl > /dev/null 2>&1; then DL='curl -sSL' ; else DL='wget -O -' ; fi
+command -v $DL > /dev/null 2>&1 || { echo >&2 "wget or curl not available"; exit 1; }
 
 # VIM customizations
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/basic.vim > ~/.vimrc
