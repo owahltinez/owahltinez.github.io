@@ -113,7 +113,6 @@ export -f install_chrome
 export -f install_acme
 export -f install_docker
 export -f install_dotnet
-export -f install_azcopy
 export -f git_setup
 export -f git_new_project
 
