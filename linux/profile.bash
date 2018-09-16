@@ -55,6 +55,12 @@ ssh_pwd_disable() {
 }
 export -f ssh_pwd_disable
 
+ssh_add_all() {
+    mkdir -p ~/.ssh
+    grep -slR "PRIVATE" ~/.ssh/ | xargs ssh-add
+}
+export -f ssh_add_all
+
 ssh_start_agent() {
     mkdir -p ~/.ssh
     ssh-add -l &>/dev/null
@@ -66,7 +72,7 @@ ssh_start_agent() {
         if [ "$?" == 2 ]; then
             (umask 066; ssh-agent > ~/.ssh/agent)
             eval "$(<~/.ssh/agent)" >/dev/null
-            ssh-add
+            ssh_add_all
         fi
     fi
 }
