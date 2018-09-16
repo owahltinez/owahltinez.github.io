@@ -98,7 +98,9 @@ function install_chrome() {
 export -f install_chrome
 
 function install_nginx() {
-    sudo apti software-properties-common && add-apt-repository ppa:nginx/stable && update && apti nginx
+    sudo apti software-properties-common && \
+        sudo add-apt-repository ppa:nginx/stable && \
+        update && apti nginx
 }
 export -f install_nginx
 
