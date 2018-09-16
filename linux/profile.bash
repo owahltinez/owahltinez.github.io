@@ -16,9 +16,6 @@ fi
 if command -v curl > /dev/null 2>&1; then alias dl='curl -sSL' ; else alias dl='wget -O -' ; fi
 
 # Define functions
-sudocheck() {
-    if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; return 1 ; else return 0 ; fi
-}
 update() {
     DEBIAN_FRONTEND=noninteractive \
         sudo apt-get update && \
@@ -28,20 +25,25 @@ update() {
         sudo apt-get -yq autoremove && \
         dl https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
 }
-lsipv6() {
-    ip -6 addr | grep inet6 | awk -F '[ \t]+|/' '{print $3}' | grep -v ^::1 | grep -v ^fe80
-}
+export -f update
+
 ssh_key_gen() {
     mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
 }
+export -f ssh_key_gen
+
 ssh_key_push() {
     ssh-copy-id -i ~/.ssh/id_rsa $@
 }
+export -f ssh_key_push
+
 ssh_key_pull() {
     scp $@:~/.ssh/id_rsa.pub /tmp/$@.pub
     cat /tmp/$@.pub >> ~/.ssh/authorized_keys
     rm /tmp/$@.pub
 }
+export -f ssh_key_pull
+
 ssh_pwd_disable() {
     # https://gist.github.com/parente/0227cfbbd8de1ce8ad05
     sudo sh -c '\
@@ -51,38 +53,71 @@ ssh_pwd_disable() {
         sed -i "/^[^#]*PasswordAuthentication[[:space:]]yes/c\PasswordAuthentication no" /etc/ssh/sshd_config || echo "PasswordAuthentication no" >> /etc/ssh/sshd_config; \
         service ssh restart'
 }
+export -f ssh_pwd_disable
+
+ssh_start_agent() {
+    mkdir -p ~/.ssh
+    ssh-add -l &>/dev/null
+    if [ "$?" == 2 ]; then
+        test -r ~/.ssh/agent && \
+            eval "$(<~/.ssh/agent)" >/dev/null
+    
+        ssh-add -l &>/dev/null
+        if [ "$?" == 2 ]; then
+            (umask 066; ssh-agent > ~/.ssh/agent)
+            eval "$(<~/.ssh/agent)" >/dev/null
+            ssh-add
+        fi
+    fi
+}
+export -f ssh_start_agent
+
 install_node() {
     sudo curl -sL https://deb.nodesource.com/setup_8.x | bash - && apti nodejs
 }
+export -f install_node
+
 install_chrome() {
     dl https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -  && \
         echo "deb [arch=$(dpkg --print-architecture)] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list && \
         update && apti google-chrome-stable
 }
+export -f install_chrome
+
 install_nginx() {
     sudo apti software-properties-common && add-apt-repository ppa:nginx/stable && update && apti nginx
 }
+export -f install_nginx
+
 install_acme() {
     dl https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh | sudo tee /usr/local/bin/acme > /dev/null && sudo chmod +x /usr/local/bin/acme
 }
+export -f install_acme
+
 install_docker() {
     dl https://get.docker.com | sudo sh && \
     dl https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null && \
     sudo chmod +x /usr/local/bin/docker-compose && \
     (sudo groupadd docker || true) && usermod -aG docker $USER
 }
+export -f install_docker
+
 install_dotnet() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
     echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod bionic main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
     update && apti dotnet-sdk-2.1
 }
+export -f install_dotnet
+
 install_vscode() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
     echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
     update && apti libxss1 libasound2 code
 }
+export -f install_vscode
+
 git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
     git config --global user.name "omtinez"
@@ -90,6 +125,8 @@ git_setup() {
     git config --global push.default simple
     git config --global core.excludesfile ~/.git/.gitignore
 }
+export -f git_setup
+
 git_new_project() {
     if [[ ! $GITLAB_TOKEN ]] ; then echo "Env variable GITLAB_TOKEN has not been set" && return 1; fi
     CURR_DIR=${PWD##*/}
@@ -99,25 +136,14 @@ git_new_project() {
         git init && \
         git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/omtinez/$PROJECT_NAME.git"
 }
-
-# Export defined functions
-export -f sudocheck
-export -f update
-export -f lsipv6
-export -f ssh_key_gen
-export -f ssh_key_push
-export -f ssh_key_pull
-export -f ssh_pwd_disable
-export -f install_node
-export -f install_chrome
-export -f install_acme
-export -f install_docker
-export -f install_dotnet
-export -f git_setup
 export -f git_new_project
+
+# Start SSH agent
+ssh_start_agent
 
 # Import other scripts / envs
 if [[ -f ~/.env ]] ; then source ~/.env ; fi
+if [[ -f ~/.bash_aliases ]] ; then source ~/.bashrc_aliases ; fi
 
 # Paths
 export PATH=$PATH:~/bin
