@@ -10,6 +10,8 @@ alias sudovi='sudo vi -u ~/.vimrc'
 # Fake sudo for devices that do not have it
 if [[ $(id -u) = 0 ]] ; then
     alias sudo=''
+else
+    alias sudo='sudo '
 fi
 
 # Binary used for downloads
