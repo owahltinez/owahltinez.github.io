@@ -11,7 +11,6 @@ DHPEM="/etc/nginx/ssl/dhparam.pem"
 
 # Issue the certificates
 /usr/local/bin/acme --issue \
-    -d domain1.com -d domain2.com -d domain3.com \
     -w /tmp/www --certhome /tmp/certs $@
 
 # Copy the created certificates, cleanup and exit
