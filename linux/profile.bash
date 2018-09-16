@@ -79,7 +79,7 @@ function ssh_start_agent() {
 export -f ssh_start_agent
 
 function ssh_screen() {
-    ssh -i ~/keys/ssh/personal $@ -t screen -DR
+    ssh $@ -t screen -DR
 }
 export -f ssh_screen
 
