@@ -85,6 +85,11 @@ function ssh_screen() {
 }
 export -f ssh_screen
 
+function ssh_tunnel() {
+    ssh -D 1080 -q -C -N $@
+}
+export -f ssh_tunnel
+
 function install_node() {
     sudo curl -sL https://deb.nodesource.com/setup_8.x | bash - && apti nodejs
 }
