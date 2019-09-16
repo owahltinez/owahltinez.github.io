@@ -90,6 +90,15 @@ function ssh_tunnel() {
 }
 export -f ssh_tunnel
 
+function ssh_bind_port() {
+    SRV=$1
+    shift
+    PORT=$1
+    shift
+    ssh -L $PORT:127.0.0.1:$PORT $SRV $@
+}
+export -f ssh_bind_port
+
 function install_node() {
     # Install NodeJS
     curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - && apti nodejs
