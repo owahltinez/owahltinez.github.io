@@ -136,14 +136,6 @@ install_docker() {
 }
 export -f install_docker
 
-function install_dotnet() {
-    dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
-    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-ubuntu-bionic-prod bionic main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
-    update && apti dotnet-sdk-2.1
-}
-export -f install_dotnet
-
 function install_vscode() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
@@ -154,8 +146,8 @@ export -f install_vscode
 
 function git_setup() {
     git config --global credential.helper 'cache --timeout=999999999'
-    git config --global user.name "omtinez"
-    git config --global user.email "omtinez@gmail.com"
+    git config --global user.name "owahltinez"
+    git config --global user.email "oscar@wahltinez.org"
     git config --global push.default simple
     git config --global core.excludesfile ~/.git/.gitignore
 }
@@ -171,6 +163,11 @@ function git_new_project() {
         git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/omtinez/$PROJECT_NAME.git"
 }
 export -f git_new_project
+
+function android_clean() {
+     find . -name build -exec rm -rf {} \;
+}
+export -f android_clean
 
 # Start SSH agent
 ssh_start_agent
