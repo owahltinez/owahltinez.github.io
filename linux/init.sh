@@ -15,7 +15,7 @@ $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/profile.bash >> ~/
 
 # Bash RC is different in OSX
 BASH_RC="$HOME/.bashrc"
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [ "$(uname -s)" = "Darwin" ]; then
     BASH_RC=".bash_profile"
 fi
 
