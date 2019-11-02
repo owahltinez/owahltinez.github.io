@@ -177,4 +177,4 @@ if [[ -f ~/.env ]] ; then source ~/.env ; fi
 if [[ -f ~/.bash_aliases ]] ; then source ~/.bashrc_aliases ; fi
 
 # Paths
-export PATH=$PATH:~/bin
+export PATH=~/bin:$PATH
