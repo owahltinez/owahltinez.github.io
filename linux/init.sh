@@ -26,7 +26,8 @@ echo "" >> ~/.ssh/authorized_keys
 mkdir -p ~/bin
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/switchip.sh > ~/bin/switchip
 $DL https://raw.githubusercontent.com/omtinez/AP-Hotspot/master/ap-hotspot > ~/bin/ap-hotspot
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/letsencrypt.sh > ~/bin/letsencrypt.sh
+$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/letsencrypt.sh > ~/bin/letsencrypt
+$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/pipi.sh > ~/bin/pipi
 chmod +x ~/bin/*
 
 # Output success
