@@ -21,7 +21,7 @@ fi
 
 # Bash profile (add ref to existing one)
 PROFILE_REF='source ~/.profile.bash'
-if ! grep -q $PROFILE_REF ~/.bashrc; then 
+if ! grep -q "$PROFILE_REF" ~/.bashrc; then 
     cp $HOME/.bashrc $HOME/.bashrc-$(date --iso-8601)-$(date +%s)
     echo $PROFILE_REF >> ~/.bashrc
 fi
