@@ -1,5 +1,3 @@
-### CUSTOM CONFIG STARTS HERE ###
-
 # Aliases
 alias ll='ls -halF'
 alias cd..='cd ..'
