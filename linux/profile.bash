@@ -1,5 +1,6 @@
 # Aliases
 alias ll='ls -halF'
+alias l='ll'
 alias cd..='cd ..'
 alias apti='sudo apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
