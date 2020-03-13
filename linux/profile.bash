@@ -2,31 +2,10 @@
 alias ll='ls -halF'
 alias l='ll'
 alias cd..='cd ..'
-alias apti='sudo apt-get -yq --no-install-suggests --no-install-recommends install'
 alias sudosu='sudo bash --init-file ~/.bashrc'
 alias sudovi='sudo vi -u ~/.vimrc'
 
-# Fake sudo for devices that do not have it
-if [[ $(id -u) = 0 ]] ; then
-    alias sudo=''
-else
-    alias sudo='sudo '
-fi
-
-# Binary used for downloads
-if command -v curl > /dev/null 2>&1; then alias dl='curl -sSL' ; else alias dl='wget -O -' ; fi
-
 # Define functions
-function update() {
-    DEBIAN_FRONTEND=noninteractive \
-        sudo apt-get update && \
-        sudo apt-get -yq --no-install-suggests --no-install-recommends \
-            -o Dpkg::Options::="--force-confdef" \
-            -o Dpkg::Options::="--force-confold" dist-upgrade && \
-        sudo apt-get -yq autoremove && \
-        dl https://gitlab.com/omtinez/initscripts/raw/master/linux/init.sh | sh
-}
-export -f update
 
 function ssh_key_gen() {
     mkdir -p ~/.ssh && ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
@@ -134,6 +113,14 @@ install_docker() {
     (sudo groupadd docker || true) && usermod -aG docker $USER
 }
 export -f install_docker
+
+function install_powershell() {
+    dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
+    update && apti powershell
+}
+export -f install_vscode
 
 function install_vscode() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
