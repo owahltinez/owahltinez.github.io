@@ -40,6 +40,7 @@ $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/apti.sh > ~/bin/ap
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/dl.sh > ~/bin/dl
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/fakesudo.sh > ~/bin/fakesudo
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/pipi.sh > ~/bin/pipi
+$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/update.sh > ~/bin/update
 chmod +x ~/bin/*
 
 # Output success
