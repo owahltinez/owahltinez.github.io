@@ -106,7 +106,7 @@ function install_acme() {
 }
 export -f install_acme
 
-install_docker() {
+function install_docker() {
     dl https://get.docker.com | sudo sh && \
     dl https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null && \
     sudo chmod +x /usr/local/bin/docker-compose && \
@@ -117,10 +117,10 @@ export -f install_docker
 function install_powershell() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
+    echo "deb [arch=$(dpkg --print-architecture)] https://packages.microsoft.com/repos/microsoft-debian-jessie-prod jessie main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list && \
     update && apti powershell
 }
-export -f install_vscode
+export -f install_powershell
 
 function install_vscode() {
     dl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
