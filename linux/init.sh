@@ -8,6 +8,8 @@ if command -v curl > /dev/null 2>&1; then DL='curl -sSL' ; else DL='wget -O -' ;
 command -v $DL > /dev/null 2>&1 || { echo >&2 "wget or curl not available"; exit 1; }
 
 # VIM customizations
+mkdir -p ~/.vim/autoload ~/.vim/bundle
+$DL https://tpo.pe/pathogen.vim ~/.vim/autoload/pathogen.vim
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/basic.vim > ~/.vimrc
 
 # Download bash profile into separate file
@@ -22,8 +24,8 @@ fi
 # Bash profile (add ref to existing one)
 PROFILE_REF='source ~/.profile.bash'
 if ! grep -q "$PROFILE_REF" ~/.bashrc; then 
-    cp $HOME/.bashrc $HOME/.bashrc-$(date --iso-8601)-$(date +%s)
-    echo $PROFILE_REF >> ~/.bashrc
+    cp $BASH_RC ${BASH_RC}-$(date --iso-8601)-$(date +%s)
+    echo $PROFILE_REF >> $BASH_RC
 fi
 
 # Global .gitignore
