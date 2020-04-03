@@ -1,3 +1,6 @@
+" Plugins
+execute pathogen#infect()
+
 " General
 syntax on                       " Highlight syntax
 set number                      " Show line numbers
