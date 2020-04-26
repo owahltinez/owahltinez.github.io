@@ -14,7 +14,7 @@ $DL https://tpo.pe/pathogen.vim > ~/.vim/autoload/pathogen.vim
 $DL $BASE_URL/basic.vim > ~/.vimrc
 
 # Download bash profile into separate file
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/profile.bash >> ~/.profile.bash
+$DL $BASE_URL/bash/profile.bash > ~/.profile.bash
 
 # Bash RC is different in OSX
 BASH_RC="$HOME/.bashrc"
