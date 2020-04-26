@@ -47,7 +47,7 @@ function ssh_start_agent() {
     if [ "$?" == 2 ]; then
         test -r ~/.ssh/agent && \
             eval "$(<~/.ssh/agent)" >/dev/null
-    
+
         ssh-add -l &>/dev/null
         if [ "$?" == 2 ]; then
             (umask 066; ssh-agent > ~/.ssh/agent)
@@ -108,7 +108,7 @@ export -f install_acme
 
 function install_docker() {
     dl https://get.docker.com | sudo sh && \
-    dl https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null && \
+    dl https://github.com/docker/compose/releases/download/1.25.5/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null && \
     sudo chmod +x /usr/local/bin/docker-compose && \
     (sudo groupadd docker || true) && usermod -aG docker $USER
 }
@@ -131,29 +131,13 @@ function install_vscode() {
 export -f install_vscode
 
 function git_setup() {
-    git config --global credential.helper 'cache --timeout=999999999'
-    git config --global user.name "owahltinez"
-    git config --global user.email "oscar@wahltinez.org"
+    git config --global user.email "$1"
+    git config --global user.name "$USER"
     git config --global push.default simple
     git config --global core.excludesfile ~/.git/.gitignore
+    git config --global credential.helper 'cache --timeout=999999999'
 }
 export -f git_setup
-
-function git_new_project() {
-    if [[ ! $GITLAB_TOKEN ]] ; then echo "Env variable GITLAB_TOKEN has not been set" && return 1; fi
-    CURR_DIR=${PWD##*/}
-    PROJECT_NAME=${1:-$CURR_DIR}
-    if [[ -f ~/.git ]] ; then rm -rfi .git ; fi && \
-        curl -H "Content-Type:application/json" https://gitlab.com/api/v4/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }" && \
-        git init && \
-        git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/omtinez/$PROJECT_NAME.git"
-}
-export -f git_new_project
-
-function android_clean() {
-     find . -name build -exec rm -rf {} \;
-}
-export -f android_clean
 
 # Start SSH agent
 ssh_start_agent
