@@ -47,7 +47,7 @@ function ssh_start_agent() {
     if [ "$?" == 2 ]; then
         test -r ~/.ssh/agent && \
             eval "$(<~/.ssh/agent)" >/dev/null
-    
+
         ssh-add -l &>/dev/null
         if [ "$?" == 2 ]; then
             (umask 066; ssh-agent > ~/.ssh/agent)
@@ -138,22 +138,6 @@ function git_setup() {
     git config --global core.excludesfile ~/.git/.gitignore
 }
 export -f git_setup
-
-function git_new_project() {
-    if [[ ! $GITLAB_TOKEN ]] ; then echo "Env variable GITLAB_TOKEN has not been set" && return 1; fi
-    CURR_DIR=${PWD##*/}
-    PROJECT_NAME=${1:-$CURR_DIR}
-    if [[ -f ~/.git ]] ; then rm -rfi .git ; fi && \
-        curl -H "Content-Type:application/json" https://gitlab.com/api/v4/projects?private_token=$GITLAB_TOKEN -d "{ \"name\": \"$PROJECT_NAME\" }" && \
-        git init && \
-        git remote add origin "https://oauth2:$GITLAB_TOKEN@gitlab.com/omtinez/$PROJECT_NAME.git"
-}
-export -f git_new_project
-
-function android_clean() {
-     find . -name build -exec rm -rf {} \;
-}
-export -f android_clean
 
 # Start SSH agent
 ssh_start_agent

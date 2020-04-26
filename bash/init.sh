@@ -1,7 +1,8 @@
 #!/bin/sh
 
-# Hardcode the Gitlab username
-USERNAME="omtinez"
+# Hardcode the Github username
+USERNAME="owahltinez"
+BASE_URL="https://$USERNAME.github.io"
 
 # Use wget or curl, whichever is available (but prefer curl)
 if command -v curl > /dev/null 2>&1; then DL='curl -sSL' ; else DL='wget -O -' ; fi
@@ -10,7 +11,7 @@ command -v $DL > /dev/null 2>&1 || { echo >&2 "wget or curl not available"; exit
 # VIM customizations
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 $DL https://tpo.pe/pathogen.vim ~/.vim/autoload/pathogen.vim
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/basic.vim > ~/.vimrc
+$DL $BASE_URL/basic.vim > ~/.vimrc
 
 # Download bash profile into separate file
 $DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/profile.bash >> ~/.profile.bash
@@ -29,20 +30,20 @@ if ! grep -q "$PROFILE_REF" ~/.bashrc; then
 fi
 
 # Global .gitignore
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/git/.gitignore_global > ~/.gitignore_global
+$DL $BASE_URL/git/.gitignore_global > ~/.gitignore_global
 
 # Deploy SSH keys
 mkdir -p ~/.ssh
-$DL https://gitlab.com/$USERNAME.keys >> ~/.ssh/authorized_keys
+$DL https://github.com/$USERNAME.keys >> ~/.ssh/authorized_keys
 echo "" >> ~/.ssh/authorized_keys
 
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/apti.sh > ~/bin/apti
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/dl.sh > ~/bin/dl
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/fakesudo.sh > ~/bin/fakesudo
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/pipi.sh > ~/bin/pipi
-$DL https://gitlab.com/$USERNAME/initscripts/raw/master/linux/update.sh > ~/bin/update
+$DL $BASE_URL/linux/apti.sh > ~/bin/apti
+$DL $BASE_URL/linux/dl.sh > ~/bin/dl
+$DL $BASE_URL/linux/fakesudo.sh > ~/bin/fakesudo
+$DL $BASE_URL/linux/pipi.sh > ~/bin/pipi
+$DL $BASE_URL/linux/update.sh > ~/bin/update
 chmod +x ~/bin/*
 
 # Output success
