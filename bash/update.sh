@@ -9,4 +9,4 @@ $APTGET \
     -o Dpkg::Options::="--force-confold" \
     -yq --no-install-suggests --no-install-recommends dist-upgrade
 $APTGET -yq autoremove
-dl https://owahltinez.github.io/linux/init.sh | sh
+dl https://owahltinez.github.io/bash/init.sh | sh
