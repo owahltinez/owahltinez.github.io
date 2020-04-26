@@ -39,11 +39,11 @@ echo "" >> ~/.ssh/authorized_keys
 
 # Create local bin dir and move some utils there
 mkdir -p ~/bin
-$DL $BASE_URL/linux/apti.sh > ~/bin/apti
-$DL $BASE_URL/linux/dl.sh > ~/bin/dl
-$DL $BASE_URL/linux/fakesudo.sh > ~/bin/fakesudo
-$DL $BASE_URL/linux/pipi.sh > ~/bin/pipi
-$DL $BASE_URL/linux/update.sh > ~/bin/update
+$DL $BASE_URL/bash/apti.sh > ~/bin/apti
+$DL $BASE_URL/bash/dl.sh > ~/bin/dl
+$DL $BASE_URL/bash/fakesudo.sh > ~/bin/fakesudo
+$DL $BASE_URL/bash/pipi.sh > ~/bin/pipi
+$DL $BASE_URL/bash/update.sh > ~/bin/update
 chmod +x ~/bin/*
 
 # Output success
