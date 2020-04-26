@@ -10,7 +10,7 @@ command -v $DL > /dev/null 2>&1 || { echo >&2 "wget or curl not available"; exit
 
 # VIM customizations
 mkdir -p ~/.vim/autoload ~/.vim/bundle
-$DL https://tpo.pe/pathogen.vim ~/.vim/autoload/pathogen.vim
+$DL https://tpo.pe/pathogen.vim > ~/.vim/autoload/pathogen.vim
 $DL $BASE_URL/basic.vim > ~/.vimrc
 
 # Download bash profile into separate file
